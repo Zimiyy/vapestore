@@ -12,4 +12,19 @@ class LandingController extends Controller
         $products = Product::all();
         return view('pages.landing', compact('products'));
     }
+
+    public function signin()
+    {
+        return view('pages.signin');
+    }
+
+    public function register()
+    {
+        return view('pages.register');
+    }
+
+    public function contact()
+    {
+        return view('pages.contact');
+    }
 }

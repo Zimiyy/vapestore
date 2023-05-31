@@ -11,7 +11,7 @@
             import heroicons from 'https://cdn.jsdelivr.net/npm/heroicons@2.0.16/+esm'
         </script>
 </head>
-<body>
+<body class="bg-black">
     @include('layout.header')
     {{$content}}
     @include('layout.footer')

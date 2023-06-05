@@ -9,11 +9,13 @@ use Filament\Forms;
 use Filament\Forms\components\Card;
 use Filament\Forms\components\Grid;
 use Filament\Forms\components\FileUpload;
+use Filament\Forms\Components\Select;
 use Filament\Forms\components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\columns\ImageColumn;
 use Filament\Tables\columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
@@ -24,7 +26,8 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
+    protected static ?int $navigationSort = 6;
 
     public static function form(Form $form): Form
     {
@@ -36,7 +39,7 @@ class UserResource extends Resource
                         ->image()
                         ->imageCropAspectRatio('1:1')
                         ->directory('users'),
-                        Grid::make(2)
+                        Grid::make(1)
                             ->schema([
                                 TextInput::make('name')
                                     ->required(),
@@ -44,6 +47,11 @@ class UserResource extends Resource
                                     ->email()
                                     ->unique(ignoreRecord: true)
                                     ->required(),
+                                Select::make('role')
+                                ->options([
+                                    'admin' => 'Admin',
+                                    'customer' => 'Customer',
+                                ])->required(),
                                 TextInput::make('password')
                                     ->password()
                                     ->confirmed()
@@ -71,6 +79,15 @@ class UserResource extends Resource
                     ->description(fn (User $record): string => $record->email)
                     ->searchable()
                     ->sortable(),
+                BadgeColumn::make('role')
+                    ->enum([
+                        'admin' => 'Admin',
+                        'customer' => 'Customer',
+                    ])
+                    ->colors([
+                        'warning' => 'admin',
+                        'success' => 'customer',
+                    ]),
                 TextColumn::make('updated_at')
                     ->date()
                     ->sortable(),

@@ -8,11 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'name',
-        'details',
-        'product_image',
-        'price',
-        'quantity',
+    protected $guarded = ['id'];
+    protected $casts = [
+        'color' => 'array',
+        'storage_size' => 'array',
+        'extra_image' => 'array',
     ];
+
+    public function getStorageModelAttribute()
+    {
+        return StorageSize::whereIn('id', $this->storage_size)->orderBy('size')->get();
+    }
+
+    public function getColorModelAttribute()
+    {
+        return Color::whereIn('id', $this->color)->orderBy('code')->get();
+    }
 }

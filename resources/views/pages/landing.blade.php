@@ -33,19 +33,14 @@
                             </div>
                         </div>
 
-                        <div class="flex flex-col items-center justify-between gap-8 md:flex-row">
+                        <div id="products" class="flex flex-col items-center justify-between gap-8 md:flex-row">
                             <div class="flex h-12 w-full divide-x overflow-hidden rounded-lg border">
-                                <a href="#"
+                                <a href="{{ route('landing').'#products' }}"
                                     class="flex w-1/4 items-center justify-center text-white transition duration-100 hover:text-indigo-500 active:text-indigo-700 active">All</a>
-                                <a href="#"
-                                    class="flex w-1/4 items-center justify-center text-white transition duration-100 hover:text-indigo-500 active:text-indigo-700">Iphone
-                                    12</a>
-                                <a href="#"
-                                    class="flex w-1/4 items-center justify-center text-white transition duration-100 hover:text-indigo-500 active:text-indigo-700">Iphone
-                                    13</a>
-                                <a href="#"
-                                    class="flex w-1/4 items-center justify-center text-white transition duration-100 hover:text-indigo-500 active:text-indigo-700">Iphone
-                                    14</a>
+                                @foreach (App\Models\Category::whereStatus('active')->orderBy('name')->get() as $category_menu)
+                                <a href="{{ route('landing', ['category'=>$category_menu->id]).'#products'  }}" class="flex w-1/4 items-center justify-center text-white transition duration-100 hover:text-indigo-500 active:text-indigo-700">
+                                    {{ $category_menu->name }}</a>
+                                @endforeach
                             </div>
 
                             <!-- social - start -->
@@ -98,172 +93,44 @@
                         </div>
 
                         <div class="grid gap-x-4 gap-y-8 sm:grid-cols-2 md:gap-x-6 lg:grid-cols-3 xl:grid-cols-4">
+                            @foreach ($products as $product)
                             <!-- product - start -->
                             <div>
-                                <a href="{{ route('product.details') }}"
+                                <a href="{{ route('product.details', $product->id) }}"
                                     class="group relative mb-2 block h-80 overflow-hidden rounded-lg bg-white lg:mb-3">
-                                    <img src="assets/img/Dotbot.jpg" loading="lazy" alt="Photo by Rachit Tank"
+                                    <img src="{{ asset('storage/'.$product->product_image) }}" loading="lazy" alt="Photo by Rachit Tank"
                                         class="h-full w-full object-cover object-center transition duration-200 group-hover:scale-110" />
-
+                                    @if($product->discount_tag)
+                                    <span class="absolute left-0 top-3 rounded-r-lg bg-red-500 px-3 py-1.5 text-sm font-semibold uppercase tracking-wider text-white">-{{$product->discount}}%</span>
+                                    @endif
                                 </a>
 
                                 <div>
                                     <a href="#"
-                                        class="hover:indigo-500 mb-1 text-white transition duration-100 lg:text-lg">DotPod</a>
+                                        class="hover:indigo-500 mb-1 text-white transition duration-100 lg:text-lg">{{ $product->name }}</a>
 
                                     <div class="flex items-end gap-2">
-                                        <span class="font-bold text-white lg:text-lg">RM299.99</span>
+                                        <span class="font-bold text-white lg:text-lg">RM{{ number_format($product->discount_price, 2, ',') }}</span>
+                                        @if($product->discount_tag)
+                                        <span class="font-bold text-white lg:text-lg">RM{{ number_format($product->discount_price, 2, ',') }}</span>
+                                        <span class=" text-red-500 lg:text-lg line-through">RM{{ number_format($product->price, 2, ',') }}</span>
+                                        @else
+                                        <span class="font-bold text-white lg:text-lg">RM{{ number_format($product->price, 2, ',') }}</span>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
                             <!-- product - end -->
-
-                            <!-- product - start -->
-                            <div>
-                                <a href="#"
-                                    class="group relative mb-2 block h-80 overflow-hidden rounded-lg bg-white lg:mb-3">
-                                    <img src="assets/img/NanoStix.png" loading="lazy" alt="Photo by Galina N"
-                                        class="h-full w-full object-cover object-center transition duration-200 group-hover:scale-110" />
-                                </a>
-
-                                <div>
-                                    <a href="#"
-                                        class="hover:indigo-500 mb-1 text-white transition duration-100 lg:text-lg">NanaStix
-                                        Black Edition</a>
-
-                                    <div class="flex items-end gap-2">
-                                        <span class="font-bold text-white lg:text-lg">RM199.99</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- product - end -->
-
-                            <!-- product - start -->
-                            <div>
-                                <a href="#"
-                                    class="group relative mb-2 block h-80 overflow-hidden rounded-lg bg-white lg:mb-3">
-                                    <img src="assets/img/VoltMi.jpg" loading="lazy" alt="Photo by eniko kis"
-                                        class="h-full w-full object-cover object-center transition duration-200 group-hover:scale-110" />
-                                </a>
-
-                                <div>
-                                    <a href="#"
-                                        class="hover:indigo-500 mb-1 text-white transition duration-100 lg:text-lg">VoltMi</a>
-
-                                    <div class="flex items-end gap-2">
-                                        <span class="font-bold text-white lg:text-lg">RM59.99</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- product - end -->
-
-                            <!-- product - start -->
-                            <div>
-                                <a href="#"
-                                    class="group relative mb-2 block h-80 overflow-hidden rounded-lg bg-white lg:mb-3">
-                                    <img src="assets/img/vapetape.jpg" loading="lazy" alt="Photo by Irene Kredenets"
-                                        class="h-full w-full object-cover object-center transition duration-200 group-hover:scale-110" />
-                                </a>
-
-                                <div>
-                                    <a href="#"
-                                        class="hover:indigo-500 mb-1 text-white transition duration-100 lg:text-lg">Vape
-                                        Tape</a>
-
-                                    <div class="flex items-end gap-2">
-                                        <span class="font-bold text-white lg:text-lg">RM69.99</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- product - end -->
-
-                            <!-- product - start -->
-                            <div>
-                                <a href="#"
-                                    class="group relative mb-2 block h-80 overflow-hidden rounded-lg bg-white lg:mb-3">
-                                    <img src="assets/img/JuiceMi.jpg" loading="lazy" alt="Photo by Charles Deluvio"
-                                        class="h-full w-full object-cover object-center transition duration-200 group-hover:scale-110" />
-                                </a>
-
-                                <div>
-                                    <a href="#"
-                                        class="hover:indigo-500 mb-1 text-white transition duration-100 lg:text-lg">JuiceMi</a>
-
-                                    <div class="flex items-end gap-2">
-                                        <span class="font-bold text-white lg:text-lg">RM149.99</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- product - end -->
-
-                            <!-- product - start -->
-                            <div>
-                                <a href="#"
-                                    class="group relative mb-2 block h-80 overflow-hidden rounded-lg bg-white lg:mb-3">
-                                    <img src="assets/img/RareVape.jpg" loading="lazy" alt="Photo by Fernando Lavin"
-                                        class="h-full w-full object-cover object-center transition duration-200 group-hover:scale-110" />
-                                </a>
-
-                                <div>
-                                    <a href="#"
-                                        class="hover:indigo-500 mb-1 text-white transition duration-100 lg:text-lg">Rare
-                                        Pro V2</a>
-
-                                    <div class="flex items-end gap-2">
-                                        <span class="font-bold text-white lg:text-lg">RM69.99</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- product - end -->
-
-                            <!-- product - start -->
-                            <div>
-                                <a href="#"
-                                    class="group relative mb-2 block h-80 overflow-hidden rounded-lg bg-white lg:mb-3">
-                                    <img src="assets/img/E-cigarette.jpg" loading="lazy" alt="Photo by Kiran CK"
-                                        class="h-full w-full object-cover object-center transition duration-200 group-hover:scale-110" />
-                                </a>
-
-                                <div>
-                                    <a href="#"
-                                        class="hover:indigo-500 mb-1 text-white transition duration-100 lg:text-lg">E-Cigarette
-                                        V3</a>
-
-                                    <div class="flex items-end gap-2">
-                                        <span class="font-bold text-white lg:text-lg">RM79.99</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- product - end -->
-
-                            <!-- product - start -->
-                            <div>
-                                <a href="#"
-                                    class="group relative mb-2 block h-80 overflow-hidden rounded-lg bg-white lg:mb-3">
-                                    <img src="assets/img/ElfBar.jpg" loading="lazy" alt="Photo by Fakurian Design"
-                                        class="h-full w-full object-cover object-center transition duration-200 group-hover:scale-110" />
-                                </a>
-
-                                <div>
-                                    <a href="#"
-                                        class="hover:indigo-500 mb-1 text-white transition duration-100 lg:text-lg">ElfBar
-                                        Pro</a>
-
-                                    <div class="flex items-end gap-2">
-                                        <span class="font-bold text-white lg:text-lg">RM39.99</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- product - end -->
+                            @endforeach
                         </div>
                     </div>
                 </div>
 
                 <!-- features - end -->
-                <hr class="mt-40">
+                <hr id="about" class="mt-40">
                 <div class="bg-black my-20 py-6 sm:py-8 lg:py-12">
                     <div class="mb-10 md:mb-16">
-                        <h2 class="mb-4 text-center text-2xl font-bold text-white md:mb-6 lg:text-3xl">Meet our Team</h2>
+                        <h2 class="mb-4 text-center text-2xl font-bold text-white md:mb-6 lg:text-3xl">About</h2>
                     </div>
                     <div class="mx-auto max-w-screen-lg px-4 md:px-8">
                         <div class="grid gap-8 md:grid-cols-2">

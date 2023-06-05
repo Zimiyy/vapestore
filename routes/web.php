@@ -16,15 +16,24 @@ use App\Http\Controllers\ProductController;
 */
 
 Route::name('landing')->get('/',[LandingController::class,'index']);
-Route::name('signin')->get('/signin',[LandingController::class,'signin']);
-Route::name('register')->get('/register',[LandingController::class,'register']);
 Route::name('contact')->get('/contact',[LandingController::class,'contact']);
 
 Route::name('product.')->prefix('product')->group(function () {
     Route::name('index')->get('/',[ProductController::class,'index']);
-    Route::name('details')->get('/details',[ProductController::class,'details']);
+    Route::name('details')->get('/details/{id}',[ProductController::class,'details']);
     Route::name('cart')->get('/cart',[ProductController::class,'cart']);
     Route::name('payment')->get('/payment',[ProductController::class,'payment']);
     Route::name('wishlist')->get('/wishlist',[ProductController::class,'wishlist']);
+});
+
+Route::middleware('guest')->group(function () {
+    Route::name('signin')->get('/signin',[LandingController::class,'signin']);
+    Route::name("signin.post")->post('login/post', [LandingController::class, 'signin_post']);
+    Route::name('register')->get('/register',[LandingController::class,'register']);
+    Route::name('register.post')->post('/register/post',[LandingController::class,'register_post']);
+});
+
+Route::middleware('auth')->group(function () {
+    Route::name("signout")->get('signout', [LandingController::class, 'signout']);
 });
 

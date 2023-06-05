@@ -6,32 +6,21 @@
                     <!-- images - start -->
                     <div class="grid gap-4 lg:grid-cols-5">
                         <div class="order-last flex gap-4 lg:order-none lg:flex-col">
+                            @foreach ($product->extra_image as $img)
                             <div class="overflow-hidden rounded-lg bg-gray-100">
-                                <img src="{{ asset('assets/img/ip14all.jpeg') }}"
+                                <img src="{{ asset('storage/'.$img) }}"
                                     loading="lazy" alt="Photo by Himanshu Dewangan"
                                     class="h-full w-full object-cover object-center" />
                             </div>
-
-                            <div class="overflow-hidden rounded-lg bg-gray-100">
-                                <img src="{{ asset('assets/img/ip14all.jpeg') }}"
-                                    loading="lazy" alt="Photo by Himanshu Dewangan"
-                                    class="h-full w-full object-cover object-center" />
-                            </div>
-
-                            <div class="overflow-hidden rounded-lg bg-gray-100">
-                                <img src="{{ asset('assets/img/ip14all.jpeg') }}"
-                                    loading="lazy" alt="Photo by Himanshu Dewangan"
-                                    class="h-full w-full object-cover object-center" />
-                            </div>
+                            @endforeach
                         </div>
 
                         <div class="relative overflow-hidden rounded-lg bg-gray-100 lg:col-span-4">
-                            <img src="{{ asset('assets/img/ip14all.jpeg') }}"
+                            <img src="{{ asset('storage/'.$product->product_image) }}"
                                 loading="lazy" alt="Photo by Himanshu Dewangan"
                                 class="h-full w-full object-cover object-center" />
 
-                            <span
-                                class="absolute left-0 top-0 rounded-br-lg bg-red-500 px-3 py-1.5 text-sm uppercase tracking-wider text-white">sale</span>
+                            @if($product->discount_tag)<span class="absolute left-0 top-0 rounded-br-lg bg-red-500 px-3 py-1.5 text-sm uppercase tracking-wider text-white">-{{$product->discount}}%</span>@endif
 
                             <a href="#"
                                 class="absolute right-4 top-4 inline-block rounded-lg border bg-white px-3.5 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-indigo-300 transition duration-100 hover:bg-gray-100 focus-visible:ring active:text-gray-700 md:text-base">
@@ -49,7 +38,7 @@
                     <div class="md:py-8">
                         <!-- name - start -->
                         <div class="mb-2 md:mb-3">
-                            <h2 class="text-2xl font-bold text-white lg:text-3xl">Pullover with pattern</h2>
+                            <h2 class="text-2xl font-bold text-white lg:text-3xl">{{$product->name}}</h2>
                         </div>
                         <!-- name - end -->
 
@@ -73,14 +62,10 @@
                             <span class="mb-3 inline-block text-sm font-semibold text-gray-500 md:text-base">Color</span>
 
                             <div class="flex flex-wrap gap-2">
-                                <span
-                                    class="h-8 w-8 rounded-full border bg-red-600 ring-2 ring-gray-800 ring-offset-1 transition duration-100"></span>
-                                <button type="button"
-                                    class="h-8 w-8 rounded-full border bg-blue-800 ring-2 ring-transparent ring-offset-1 transition duration-100 hover:ring-gray-200"></button>
-                                <button type="button"
-                                    class="h-8 w-8 rounded-full border bg-gray-200 ring-2 ring-transparent ring-offset-1 transition duration-100 hover:ring-gray-200"></button>
-                                <button type="button"
-                                    class="h-8 w-8 rounded-full border bg-white ring-2 ring-transparent ring-offset-1 transition duration-100 hover:ring-gray-200"></button>
+                                <input type="hidden" id="color" name="color" value="">
+                                @foreach ($product->color_model as $color)
+                                <button type="button" onclick="setColor($(this))" value="{{$color->id}}" class="color-button h-8 w-8 rounded-full border bg-[{{ $color->code }}] ring-2 ring-transparent ring-offset-1 transition duration-100 hover:ring-gray-200"></button>
+                                @endforeach
                             </div>
                         </div>
                         <!-- color - end -->
@@ -88,12 +73,15 @@
                         <!-- size - start -->
                         <div class="mb-8 md:mb-10">
                             <span class="mb-3 inline-block text-sm font-semibold text-gray-500 md:text-base">Storage Size</span>
-
+                            <input type="hidden" id="size" name="size" value="">
                             <div class="flex flex-wrap gap-3">
-                                <button type="button" class="flex h-8 w-20 items-center justify-center rounded-md border bg-white text-center text-sm font-semibold text-gray-800 transition duration-100 hover:bg-gray-100 active:bg-gray-200">128 GB</button>
+                                @foreach ($product->storage_model as $size)
+                                <button type="button" onclick="setSize($(this))" value="{{$size->id}}" class="size-button flex h-8 w-20 items-center justify-center rounded-md border bg-white text-center text-sm font-semibold text-gray-800 transition duration-100 hover:bg-gray-100 active:bg-gray-200">{{ $size->label }}</button>
+                                @endforeach
+                                {{-- <button type="button" class="flex h-8 w-20 items-center justify-center rounded-md border bg-white text-center text-sm font-semibold text-gray-800 transition duration-100 hover:bg-gray-100 active:bg-gray-200">128 GB</button>
                                 <button type="button" class="flex h-8 w-20 items-center justify-center rounded-md border bg-white text-center text-sm font-semibold text-gray-800 transition duration-100 hover:bg-gray-100 active:bg-gray-200">256 GB</button>
-                                <span class="flex h-8 w-20 cursor-default items-center justify-center rounded-md border border-indigo-500 bg-indigo-500 text-center text-sm font-semibold text-white">512 GB</span>
-                                <button type="button" class="flex h-8 w-20 items-center justify-center rounded-md border bg-white text-center text-sm font-semibold text-gray-800 transition duration-100 hover:bg-gray-100 active:bg-gray-200">1 TB</button>
+                                <button typ class="flex h-8 w-20 cursor-default items-center justify-center rounded-md border border-indigo-500 bg-indigo-500 text-center text-sm font-semibold text-white">512 GB</span>
+                                <button type="button" class="flex h-8 w-20 items-center justify-center rounded-md border bg-white text-center text-sm font-semibold text-gray-800 transition duration-100 hover:bg-gray-100 active:bg-gray-200">1 TB</button> --}}
                             </div>
                         </div>
                         <!-- size - end -->
@@ -101,8 +89,12 @@
                         <!-- price - start -->
                         <div class="mb-4">
                             <div class="flex items-end gap-2">
-                                <span class="text-xl font-bold text-white md:text-2xl">$15.00</span>
-                                <span class="mb-0.5 text-red-500 line-through">$30.00</span>
+                                @if($product->discount_tag)
+                                <span class="text-xl font-bold text-white md:text-2xl">RM{{ number_format($product->discount_price, 2, ',') }}</span>
+                                <span class="mb-0.5 text-red-500 line-through">RM{{ number_format($product->price, 2, ',') }}</span>
+                                @else
+                                <span class="text-xl font-bold text-white md:text-2xl">RM{{ number_format($product->price, 2, ',') }}</span>
+                                @endif
                             </div>
 
                             <span class="text-sm text-gray-500">incl. VAT plus shipping</span>
@@ -138,5 +130,20 @@
                 </div>
             </div>
         </div>
+        <script>
+            function setColor(that) {
+                $('#color').val(that.val());
+                $('.color-button').removeClass('ring-gray-200');
+                that.addClass('ring-gray-200');
+            }
+
+            function setSize(that) {
+                $('#size').val(that.val());
+                $('.size-button').addClass('bg-white');
+                $('.size-button').removeClass('border border-indigo-500 bg-indigo-500 text-white');
+                that.addClass('border border-indigo-500 bg-indigo-500 text-white');
+                that.removeClass('bg-white');
+            }
+        </script>
     @endslot
 @endcomponent

@@ -11,99 +11,42 @@
                 <!-- text - end -->
 
                 <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                    @foreach ($products as $product)
                     <!-- product - start -->
                     <div>
-                        <a href="{{ route('product.details') }}" class="group relative block h-96 overflow-hidden rounded-t-lg bg-gray-100">
-                            <img src="https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&q=75&fit=crop&crop=top&w=600&h=700"
+                        <a href="{{ route('product.details', $product->id) }}" class="group relative block h-96 overflow-hidden rounded-t-lg bg-gray-100">
+                            <img src="{{ asset('storage/'.$product->product_image) }}"
                                 loading="lazy" alt="Photo by Austin Wade"
                                 class="h-full w-full object-cover object-center transition duration-200 group-hover:scale-110" />
 
-                            <span class="absolute left-0 top-3 rounded-r-lg bg-red-500 px-3 py-1.5 text-sm font-semibold uppercase tracking-wider text-white">-50%</span>
+                            @if($product->discount_tag)
+                            <span class="absolute left-0 top-3 rounded-r-lg bg-red-500 px-3 py-1.5 text-sm font-semibold uppercase tracking-wider text-white">-{{ $product->discount }}%</span>
+                            @endif
                         </a>
 
                         <div class="flex items-start justify-between gap-2 rounded-b-lg bg-gray-100 p-4">
                             <div class="flex flex-col">
                                 <a href="#"
-                                    class="font-bold text-gray-800 transition duration-100 hover:text-gray-500 lg:text-lg">iPhone 13 Pro Max</a>
-                                <span class="text-sm text-gray-500 lg:text-base">256 GB</span>
+                                    class="font-bold text-gray-800 transition duration-100 hover:text-gray-500 lg:text-lg">{{ $product->name }}</a>
+                                @if(count($product->storage_model ?? 0) > 1)
+                                <span class="text-sm text-gray-500 lg:text-base">{{ $product->storage_model[0]->label }} - {{ $product->storage_model[count($product->storage_model)-1]->label }}</span>
+                                @else
+                                <span class="text-sm text-gray-500 lg:text-base">{{ $product->storage_model[0]->label }}</span>
+                                @endif
                             </div>
 
                             <div class="flex flex-col items-end">
-                                <span class="font-bold text-gray-600 lg:text-lg">$1500.99</span>
-                                <span class="text-sm text-red-500 line-through">$2000.99</span>
+                                @if($product->discount_tag)
+                                <span class="font-bold text-gray-600 lg:text-lg">RM{{ number_format($product->discount_price, 2, ',') }}</span>
+                                <span class="text-sm text-red-500 line-through">RM{{ number_format($product->price, 2, ',') }}</span>
+                                @else
+                                <span class="font-bold text-gray-600 lg:text-lg">RM{{ number_format($product->price, 2, ',') }}</span>
+                                @endif
                             </div>
                         </div>
                     </div>
                     <!-- product - end -->
-
-                    <!-- product - start -->
-                    <div>
-                        <a href="#" class="group relative block h-96 overflow-hidden rounded-t-lg bg-gray-100">
-                            <img src="https://images.unsplash.com/photo-1523359346063-d879354c0ea5?auto=format&q=75&fit=crop&crop=top&w=600&h=700"
-                                loading="lazy" alt="Photo by Nick Karvounis"
-                                class="h-full w-full object-cover object-center transition duration-200 group-hover:scale-110" />
-                        </a>
-
-                        <div class="flex items-start justify-between gap-2 rounded-b-lg bg-gray-100 p-4">
-                            <div class="flex flex-col">
-                                <a href="#"
-                                    class="font-bold text-gray-800 transition duration-100 hover:text-gray-500 lg:text-lg">Cool
-                                    Outfit</a>
-                                <span class="text-sm text-gray-500 lg:text-base">by Cool Brand</span>
-                            </div>
-
-                            <div class="flex flex-col items-end">
-                                <span class="font-bold text-gray-600 lg:text-lg">$29.99</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- product - end -->
-
-                    <!-- product - start -->
-                    <div>
-                        <a href="#" class="group relative block h-96 overflow-hidden rounded-t-lg bg-gray-100">
-                            <img src="https://images.unsplash.com/photo-1548286978-f218023f8d18?auto=format&q=75&fit=crop&crop=top&w=600&h=700"
-                                loading="lazy" alt="Photo by Austin Wade"
-                                class="h-full w-full object-cover object-center transition duration-200 group-hover:scale-110" />
-                        </a>
-
-                        <div class="flex items-start justify-between gap-2 rounded-b-lg bg-gray-100 p-4">
-                            <div class="flex flex-col">
-                                <a href="#"
-                                    class="font-bold text-gray-800 transition duration-100 hover:text-gray-500 lg:text-lg">Nice
-                                    Outfit</a>
-                                <span class="text-sm text-gray-500 lg:text-base">by Nice Brand</span>
-                            </div>
-
-                            <div class="flex flex-col items-end">
-                                <span class="font-bold text-gray-600 lg:text-lg">$35.00</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- product - end -->
-
-                    <!-- product - start -->
-                    <div>
-                        <a href="#" class="group relative block h-96 overflow-hidden rounded-t-lg bg-gray-100">
-                            <img src="https://images.unsplash.com/photo-1566207274740-0f8cf6b7d5a5?auto=format&q=75&fit=crop&crop=top&w=600&h=700"
-                                loading="lazy" alt="Photo by Vladimir Fedotov"
-                                class="h-full w-full object-cover object-center transition duration-200 group-hover:scale-110" />
-                        </a>
-
-                        <div class="flex items-start justify-between gap-2 rounded-b-lg bg-gray-100 p-4">
-                            <div class="flex flex-col">
-                                <a href="#"
-                                    class="font-bold text-gray-800 transition duration-100 hover:text-gray-500 lg:text-lg">Lavish
-                                    Outfit</a>
-                                <span class="text-sm text-gray-500 lg:text-base">by Lavish Brand</span>
-                            </div>
-
-                            <div class="flex flex-col items-end">
-                                <span class="font-bold text-gray-600 lg:text-lg">$49.99</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- product - end -->
+                    @endforeach
                 </div>
             </div>
         </div>

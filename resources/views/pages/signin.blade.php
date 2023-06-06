@@ -17,6 +17,7 @@
             <h2 class="mb-4 text-center text-2xl font-bold text-white md:mb-8 lg:text-3xl">Login</h2>
             <form method="post" id="form" action="{{ route('signin.post') }}" class="mx-auto max-w-lg rounded-lg border">
                 @csrf
+                <input type="hidden" name="product_id" value="{{ $product_id ?? '' }}">
                 <div class="flex flex-col gap-4 p-4 md:p-8">
                     <div>
                         <label for="email" class="mb-2 inline-block text-sm text-white sm:text-base">Email</label>

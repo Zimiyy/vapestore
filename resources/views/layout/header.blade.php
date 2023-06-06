@@ -24,9 +24,12 @@
               <!-- buttons - start -->
               <div class="flex divide-x border-r sm:border-l">
                 <a href="{{ route('product.wishlist') }}" class="hidden h-12 w-12 flex-col items-center justify-center gap-1.5 transition text-white duration-100 hover:text-indigo-500 active:text-indigo-500 sm:flex sm:h-20 sm:w-20 md:h-24 md:w-24">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                  </svg>
+                  <div class="relative inline-flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    </svg>
+                    <span class="absolute -top-3 -right-3 h-5 w-5 text-xs rounded-full bg-indigo-500 flex justify-center items-center items"><span>10</span></span>
+                  </div>
 
                   <span class="hidden text-xs font-semibold sm:block @if(is_active('product.wishlist')) text-indigo-500 @else text-white transition duration-100 hover:text-indigo-500 active:text-indigo-700 @endif">Wishlist</span>
                 </a>
@@ -52,11 +55,15 @@
                     </svg>
                     <span class="hidden text-xs font-semibold sm:block">Log Out</span>
                 </a> --}}
-                <a href="#" class="flex h-12 w-12 flex-col items-center justify-center gap-1.5 transition text-white duration-100 hover:text-indigo-500 active:text-indigo-500 sm:h-20 sm:w-20 md:h-24 md:w-24">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                  </svg>
-
+                <a href="{{ route('product.cart') }}" class="flex h-12 w-12 flex-col items-center justify-center gap-1.5 transition text-white duration-100 hover:text-indigo-500 active:text-indigo-500 sm:h-20 sm:w-20 md:h-24 md:w-24">
+                  <div class="relative inline-flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                    </svg>
+                    @if(user())
+                      @if(getCartCount()>0)<span class="absolute -top-3 -right-3 h-5 w-5 text-xs rounded-full bg-indigo-500 flex justify-center items-center items"><span id="cart_count">{{ getCartCount() }}</span></span>@endif
+                    @endif
+                  </div>
                   <span class="hidden text-xs font-semibold sm:block">Cart</span>
                 </a>
               </div>

@@ -37,10 +37,10 @@
 
                             <div class="flex flex-col items-end">
                                 @if($product->discount_tag)
-                                <span class="font-bold text-gray-600 lg:text-lg">RM{{ number_format($product->discount_price, 2, ',') }}</span>
-                                <span class="text-sm text-red-500 line-through">RM{{ number_format($product->price, 2, ',') }}</span>
+                                <span class="font-bold text-gray-600 lg:text-lg">RM{{ number_format($product->discount_price, 2, '.') }}</span>
+                                <span class="text-sm text-red-500 line-through">RM{{ number_format($product->price, 2, '.') }}</span>
                                 @else
-                                <span class="font-bold text-gray-600 lg:text-lg">RM{{ number_format($product->price, 2, ',') }}</span>
+                                <span class="font-bold text-gray-600 lg:text-lg">RM{{ number_format($product->price, 2, '.') }}</span>
                                 @endif
                             </div>
                         </div>

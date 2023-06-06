@@ -110,12 +110,11 @@
                                         class="hover:indigo-500 mb-1 text-white transition duration-100 lg:text-lg">{{ $product->name }}</a>
 
                                     <div class="flex items-end gap-2">
-                                        <span class="font-bold text-white lg:text-lg">RM{{ number_format($product->discount_price, 2, ',') }}</span>
                                         @if($product->discount_tag)
-                                        <span class="font-bold text-white lg:text-lg">RM{{ number_format($product->discount_price, 2, ',') }}</span>
-                                        <span class=" text-red-500 lg:text-lg line-through">RM{{ number_format($product->price, 2, ',') }}</span>
+                                        <span class="font-bold text-white lg:text-lg">RM{{ number_format($product->discount_price, 2, '.') }}</span>
+                                        <span class=" text-red-500 lg:text-lg line-through">RM{{ number_format($product->price, 2, '.') }}</span>
                                         @else
-                                        <span class="font-bold text-white lg:text-lg">RM{{ number_format($product->price, 2, ',') }}</span>
+                                        <span class="font-bold text-white lg:text-lg">RM{{ number_format($product->price, 2, '.') }}</span>
                                         @endif
                                     </div>
                                 </div>

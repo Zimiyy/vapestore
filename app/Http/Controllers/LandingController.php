@@ -17,9 +17,10 @@ class LandingController extends Controller
         return view('pages.landing', compact('products'));
     }
 
-    public function signin()
-    {
-        return view('pages.signin');
+    public function signin(Request $request)
+    {  
+        $product_id = $request->product_id;
+        return view('pages.signin', compact('product_id'));
     }
 
     public function signin_post(Request $request)
@@ -44,6 +45,9 @@ class LandingController extends Controller
                 session()->flush();
                 session()->flash('error', "Please enter Admin Login Page.");
                 return back();
+            }
+            if($request->product_id){
+                return redirect()->route('product.details', $request->product_id);
             }
             session()->flash('success', "Login successfully.");
             return redirect()->route('landing');

@@ -90,10 +90,10 @@
                         <div class="mb-4">
                             <div class="flex items-end gap-2">
                                 @if($product->discount_tag)
-                                <span class="text-xl font-bold text-white md:text-2xl">RM{{ number_format($product->discount_price, 2, ',') }}</span>
-                                <span class="mb-0.5 text-red-500 line-through">RM{{ number_format($product->price, 2, ',') }}</span>
+                                <span class="text-xl font-bold text-white md:text-2xl">RM{{ number_format($product->discount_price, 2, '.') }}</span>
+                                <span class="mb-0.5 text-red-500 line-through">RM{{ number_format($product->price, 2, '.') }}</span>
                                 @else
-                                <span class="text-xl font-bold text-white md:text-2xl">RM{{ number_format($product->price, 2, ',') }}</span>
+                                <span class="text-xl font-bold text-white md:text-2xl">RM{{ number_format($product->price, 2, '.') }}</span>
                                 @endif
                             </div>
 
@@ -116,13 +116,24 @@
 
                         <!-- buttons - start -->
                         <div class="flex gap-2.5">
-                            <a href="#"
-                                class="inline-block flex-1 rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 sm:flex-none md:text-base">Add
-                                to cart</a>
-
-                            <a href="{{ route('product.cart') }}"
+                            @if(user())
+                            <button onclick="addItem($(this))"
+                            class="inline-block flex-1 rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 sm:flex-none md:text-base">Add
+                            to cart</button>
+                            @else
+                            <a href="{{ route('signin', ['product_id'=>$product->id]) }}"
+                            class="inline-block flex-1 rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 sm:flex-none md:text-base">Add
+                            to cart</a>
+                            @endif
+                            <button onclick="buyNow($(this))"
+                                class="inline-block rounded-lg bg-gray-200 px-8 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-indigo-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base">Buy
+                                now</button>
+                            @if(user())
+                            @else
+                            <a href="{{ route('signin', ['product_id'=>$product->id]) }}"
                                 class="inline-block rounded-lg bg-gray-200 px-8 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-indigo-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base">Buy
                                 now</a>
+                            @endif
                         </div>
                         <!-- buttons - end -->
                     </div>
@@ -130,6 +141,7 @@
                 </div>
             </div>
         </div>
+        @include('pages.product.add_item')
         <script>
             function setColor(that) {
                 $('#color').val(that.val());

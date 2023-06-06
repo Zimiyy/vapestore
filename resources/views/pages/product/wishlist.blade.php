@@ -10,7 +10,7 @@
                     <!-- product - start -->
                     <div class="flex flex-wrap bg-gray-100 gap-x-4 overflow-hidden rounded-lg border sm:gap-y-4 lg:gap-6">
                         <a href="#" class="group relative block h-48 w-32 overflow-hidden bg-gray-100 sm:h-56 sm:w-40">
-                            <img src="https://images.unsplash.com/photo-1612681621979-fffe5920dbe8?auto=format&q=75&fit=crop&w=200"
+                            <img src="{{ asset('assets/img/ip14all.jpeg') }}"
                                 loading="lazy" alt="Photo by Thái An"
                                 class="h-full w-full object-cover object-center transition duration-200 group-hover:scale-110" />
                         </a>
@@ -25,7 +25,7 @@
                             </div>
 
                             <div>
-                                <span class="mb-1 block font-bold text-gray-800 md:text-lg">$1500.00</span>
+                                <span class="mb-1 block font-bold text-gray-800 md:text-lg">RM1500.00</span>
 
                                 <span class="flex items-center gap-1 text-sm text-gray-500">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" fill="none"
@@ -58,7 +58,7 @@
                             </div>
 
                             <div class="ml-4 pt-3 md:ml-8 md:pt-2 lg:ml-16">
-                                <span class="block font-bold text-gray-800 md:text-lg">$1500.00</span>
+                                <span class="block font-bold text-gray-800 md:text-lg">RM1500.00</span>
                             </div>
                         </div>
                     </div>
